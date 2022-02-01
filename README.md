@@ -85,4 +85,4 @@ yarn add -D photon-cli
 
 ### For special functionalities read the documentation
 
-[Documentation](https://github.com/Frank-Mayer/photon-re/wiki)
+[Documentation](https://github.com/photon-framework/runtime/wiki)

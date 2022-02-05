@@ -1,34 +1,10 @@
-const router = document.querySelector("*[photon-router]");
+import { updateRoutingAnchors } from "./src/updateRoutingAnchors";
+import { router } from "./src/router";
 
-if (!router) {
-  throw new Error("No router found");
-}
+updateRoutingAnchors();
 
-console.debug("Initializing Photon");
-
-const routingAnchors = document.querySelectorAll(
-  "a[data-route]"
-) as NodeListOf<HTMLAnchorElement>;
-routingAnchors.forEach((a) => {
-  a.href = a.dataset.route!;
-  delete a.dataset.route;
-
-  a.addEventListener(
-    "click",
-    (ev) => {
-      ev.preventDefault();
-      console.debug("Routing to", a.href);
-      router.dispatchEvent(
-        new CustomEvent("routing", {
-          detail: {
-            route: a.href,
-          },
-          cancelable: false,
-        })
-      );
-    },
-    {
-      passive: false,
-    }
-  );
-});
+window.history.replaceState(
+  { pageTitle: document.title },
+  document.title,
+  router.dataset.route
+);

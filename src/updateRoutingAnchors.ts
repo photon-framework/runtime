@@ -1,7 +1,5 @@
-import { updateRouterContent } from "./updateRouterContent";
-import { RoutingEvent, RoutedEvent } from "./eventListener";
 import { router } from "./router";
-import { navigate } from "./navigate";
+import { navigate, performNavigation } from "./navigate";
 import { join } from "path";
 
 const elOptions: AddEventListenerOptions = {
@@ -19,13 +17,7 @@ const onRoutingAnchorClick = (ev: MouseEvent) => {
     return;
   }
 
-  const newLocation = navigate(route);
-
-  if (router.dispatchEvent(new RoutingEvent(newLocation))) {
-    updateRouterContent(newLocation).then(() => {
-      router.dispatchEvent(new RoutedEvent(newLocation));
-    });
-  }
+  performNavigation(navigate(route));
 };
 
 const updateRoutingAnchor = (a: HTMLAnchorElement) => {

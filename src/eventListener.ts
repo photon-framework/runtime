@@ -1,14 +1,31 @@
+import { makePath } from "./path";
+import type { path } from "./path";
 import { router } from "./router";
 
 export class RoutingEvent extends CustomEvent<{
   router: HTMLElement;
-  route: string;
+  route: path;
+}> {
+  constructor(newLocation: string) {
+    super("route", {
+      detail: {
+        router: router,
+        route: makePath(newLocation),
+      },
+      cancelable: true,
+    });
+  }
+}
+
+export class RoutedEvent extends CustomEvent<{
+  router: HTMLElement;
+  route: path;
 }> {
   constructor(newLocation: string) {
     super("routed", {
       detail: {
         router: router,
-        route: newLocation,
+        route: makePath(newLocation),
       },
       cancelable: false,
     });
@@ -16,7 +33,8 @@ export class RoutingEvent extends CustomEvent<{
 }
 
 interface RouterEventMap {
-  routed: RoutingEvent;
+  route: RoutingEvent;
+  routed: RoutedEvent;
 }
 
 export const addRoutingEventListener = <K extends keyof RouterEventMap>(

@@ -1,7 +1,8 @@
+import { updateRouterContent } from "./updateRouterContent";
+import { RoutingEvent, RoutedEvent } from "./eventListener";
 import { router } from "./router";
 import { navigate } from "./navigate";
 import { join } from "path";
-import { updateRouterContent } from "./updateRouterContent";
 
 const elOptions: AddEventListenerOptions = {
   passive: false,
@@ -13,31 +14,18 @@ const onRoutingAnchorClick = (ev: MouseEvent) => {
 
   const a = ev.target as HTMLAnchorElement;
 
-  const href = a.getAttribute("href");
-  if (!href) {
-    return;
-  }
-
   const route = a.dataset.route;
   if (!route) {
     return;
   }
 
-  console.debug("Routing to", href);
-
   const newLocation = navigate(route);
 
-  updateRouterContent(newLocation).then(() => {
-    router.dispatchEvent(
-      new CustomEvent("routed", {
-        detail: {
-          router: router,
-          route: newLocation,
-        },
-        cancelable: false,
-      })
-    );
-  });
+  if (router.dispatchEvent(new RoutingEvent(newLocation))) {
+    updateRouterContent(newLocation).then(() => {
+      router.dispatchEvent(new RoutedEvent(newLocation));
+    });
+  }
 };
 
 const updateRoutingAnchor = (a: HTMLAnchorElement) => {

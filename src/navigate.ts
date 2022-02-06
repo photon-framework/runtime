@@ -2,6 +2,7 @@ import { router } from "./router";
 import { join } from "path";
 import { RoutedEvent, RoutingEvent } from "./eventListener";
 import { updateRouterContent } from "./updateRouterContent";
+import { updateRoutingAnchors } from "./updateRoutingAnchors";
 
 /**
  * Push a new location to the url without reloading the page.
@@ -21,6 +22,7 @@ export const navigate = (
 export const performNavigation = (newLocation: string) => {
   if (router.dispatchEvent(new RoutingEvent(newLocation))) {
     updateRouterContent(newLocation).then(() => {
+      updateRoutingAnchors(router);
       router.dispatchEvent(new RoutedEvent(newLocation));
     });
   }

@@ -1,5 +1,5 @@
-import { makePath } from "./path";
-import type { path } from "./path";
+import { makePath } from "./makePath";
+import type { path } from "./makePath";
 import { router } from "./router";
 
 export class RoutingEvent extends CustomEvent<{

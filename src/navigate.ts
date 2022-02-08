@@ -1,5 +1,5 @@
 import { router } from "./router";
-import { join } from "path";
+import { join } from "./path";
 import { RoutedEvent, RoutingEvent } from "./eventListener";
 import { updateRouterContent } from "./updateRouterContent";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";

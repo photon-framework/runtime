@@ -1,5 +1,5 @@
 import { insertPlaceholders } from "./insertPlaceholders";
-import { join } from "path";
+import { join } from "./path";
 import { router } from "./router";
 
 const htmlLocationFromPath = (path: string) => {

@@ -3,7 +3,7 @@ import { join } from "path";
 import { router } from "./router";
 
 const htmlLocationFromPath = (path: string) => {
-  const url = join(router.dataset.content, path, "index.html");
+  const url = join(router.dataset.content, path + ".html");
   if (url[0] === "/") {
     return url;
   } else {

@@ -4,7 +4,7 @@
   "version": "0.1.3",
   "type": "module",
   "description": "Simple and high performance web frontend framework",
-  "main": "index.js",
+  "main": "core.js",
   "target": {
     "default": {
       "includeNodeModules": true
@@ -14,7 +14,7 @@
     "node": "17"
   },
   "scripts": {
-    "build": "yarn run parcel build ./core.ts --no-source-maps && mv index.js core.js && yarn run tsc -p .",
+    "build": "yarn run parcel build ./src/core.ts --no-source-maps && yarn run tsc -p .",
     "deploy": "yarn run build && yarn publish",
     "docs": "rm -rf ./docs/* && rm -rf ../photon.wiki/*.md && node docs.cjs"
   },

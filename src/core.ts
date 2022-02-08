@@ -1,7 +1,7 @@
-import { updateRoutingAnchors } from "./src/updateRoutingAnchors";
-import { router } from "./src/router";
-import { insertPlaceholders } from "./src/insertPlaceholders";
-import { performNavigation } from "./src/navigate";
+import { updateRoutingAnchors } from "./updateRoutingAnchors";
+import { router } from "./router";
+import { insertPlaceholders } from "./insertPlaceholders";
+import { performNavigation } from "./navigate";
 
 updateRoutingAnchors();
 

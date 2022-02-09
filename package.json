@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/path-browserify": "^1.0.0",
     "jsdoc-to-markdown": "^7.1.1",
-    "parcel": "^2.2.1",
+    "parcel": "^2.3.0",
     "typedoc": "^0.22.11",
     "typedoc-github-wiki-theme": "^1.0.0",
     "typedoc-plugin-markdown": "^3.11.12",

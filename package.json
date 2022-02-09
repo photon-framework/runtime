@@ -10,9 +10,6 @@
       "includeNodeModules": true
     }
   },
-  "engines": {
-    "node": "17"
-  },
   "scripts": {
     "build-core": "yarn run parcel build ./src/core.ts --no-source-maps && yarn run tsc -p .",
     "rename-core": "mv index.js core.js",

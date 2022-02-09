@@ -41,8 +41,6 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@frank-mayer/magic": "^1.3.2",
-    "@parcel/node-libs-browser": "^2.2.1",
     "path-browserify": "^1.0.1"
   }
 }

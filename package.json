@@ -1,10 +1,10 @@
 {
   "name": "photon-re",
   "displayName": "photon runtime",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "Simple and high performance web frontend framework",
-  "main": "core.js",
+  "main": "index.js",
   "target": {
     "default": {
       "includeNodeModules": true
@@ -14,7 +14,9 @@
     "node": "17"
   },
   "scripts": {
-    "build": "yarn run parcel build ./src/core.ts --no-source-maps && yarn run tsc -p .",
+    "build-core": "yarn run parcel build ./src/core.ts --no-source-maps && yarn run tsc -p .",
+    "rename-core": "mv index.js core.js",
+    "build-tsc": "yarn run tsc -p .",
     "deploy": "yarn run build && yarn publish",
     "docs": "rm -rf ./docs/* && rm -rf ../photon.wiki/*.md && node docs.cjs"
   },

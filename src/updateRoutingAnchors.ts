@@ -1,6 +1,6 @@
 import { router } from "./router";
 import { navigate, performNavigation } from "./navigate";
-import { join } from "./path";
+import { join } from "path-browserify";
 
 const elOptions: AddEventListenerOptions = {
   passive: false,

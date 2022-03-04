@@ -28,10 +28,10 @@
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.17.0.tgz"
   integrity sha512-VKXSCQx5D8S04ej+Dqsr1CzYvvWgf20jIw2D+YhQCrIlr2UZGaDds23Y0xg75/skOxpLCRpUZvk/1EAVkGoDOw==
 
-"@frank-mayer/magic@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/@frank-mayer/magic/-/magic-1.4.0.tgz"
-  integrity sha512-NUqKF1bud7jc5fgT4Wn0ayb/zk1wsYB00gx8LL/ITTPF2dXsb98CPYsp5l1fkg2Tm0V2fbT0DtD1KMiyKdGE/Q==
+"@frank-mayer/magic@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@frank-mayer/magic/-/magic-1.5.0.tgz#93e64d7bf3408a8ad3707ce2c8114586bfa3380b"
+  integrity sha512-z9NG1uVwwdmFn8QeKzbKpwugdi3Aw0tb5iFg54IRzRloZsDd5qObcba3ziFzyrr2ZJX5VJC8kuyJMOCjXVUMfQ==
 
 "@parcel/bundler-default@2.3.2":
   version "2.3.2"
@@ -617,11 +617,6 @@
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
-
-"@types/path-browserify@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/path-browserify/-/path-browserify-1.0.0.tgz#294ec6e88b6b0d340a3897b7120e5b393f16690e"
-  integrity sha512-XMCcyhSvxcch8b7rZAtFAaierBYdeHXVvg2iYnxOV0MCQHmPuRRmGZPFDRzPayxcGiiSL1Te9UIO+f3cuj0tfw==
 
 abortcontroller-polyfill@^1.1.9:
   version "1.7.3"
@@ -1568,11 +1563,6 @@ parse-json@^5.0.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-path-browserify@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-1.0.1.tgz#d98454a9c3753d5790860f16f68867b9e46be1fd"
-  integrity sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==
-
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz"
@@ -2055,17 +2045,17 @@ typedoc-github-wiki-theme@^1.0.0:
   resolved "https://registry.npmjs.org/typedoc-github-wiki-theme/-/typedoc-github-wiki-theme-1.0.0.tgz"
   integrity sha512-8ZuRBSTq15j7oTCMRAiZV3t7KH+Y6tOXkEcyRj5HUEwCgd08DCfXpSrLHjXc83MlvvGi+16n7LuXK17NkEjf/g==
 
-typedoc-plugin-markdown@^3.11.12:
-  version "3.11.12"
-  resolved "https://registry.npmjs.org/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.11.12.tgz"
-  integrity sha512-gb/RuzgZ1zCnRUOqUg6firIqU7xDs9s7hq0vlU/gAsFfVCnpl3NTM9vPyPON75nnpfVFCxr/hmKQ01k1CYY/Qg==
+typedoc-plugin-markdown@^3.11.14:
+  version "3.11.14"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.11.14.tgz#2a7a04abd50b8f1e5d46793061d70229d504d2cd"
+  integrity sha512-lh47OQvl0079nB18YL9wuTRRhMpjo300SZKfx/xpQY8qG+GINeSxTod95QBELeI0NP81sNtUbemRDrn5nyef4Q==
   dependencies:
     handlebars "^4.7.7"
 
-typedoc@^0.22.11:
-  version "0.22.11"
-  resolved "https://registry.npmjs.org/typedoc/-/typedoc-0.22.11.tgz"
-  integrity sha512-pVr3hh6dkS3lPPaZz1fNpvcrqLdtEvXmXayN55czlamSgvEjh+57GUqfhAI1Xsuu/hNHUT1KNSx8LH2wBP/7SA==
+typedoc@^0.22.12:
+  version "0.22.12"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.22.12.tgz#52a8bb0e77458dcbab35fb89e24b80160ba6558d"
+  integrity sha512-FcyC+YuaOpr3rB9QwA1IHOi9KnU2m50sPJW5vcNRPCIdecp+3bFkh7Rq5hBU1Fyn29UR2h4h/H7twZHWDhL0sw==
   dependencies:
     glob "^7.2.0"
     lunr "^2.3.9"
@@ -2073,10 +2063,10 @@ typedoc@^0.22.11:
     minimatch "^3.0.4"
     shiki "^0.10.0"
 
-typescript@^4.5.5:
-  version "4.5.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.5.5.tgz"
-  integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
+typescript@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.2.tgz#fe12d2727b708f4eef40f51598b3398baa9611d4"
+  integrity sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==
 
 typical@^2.4.2, typical@^2.6.0, typical@^2.6.1:
   version "2.6.1"

@@ -33,16 +33,14 @@
   },
   "homepage": "https://github.com/photon-framework",
   "devDependencies": {
-    "@types/path-browserify": "^1.0.0",
     "jsdoc-to-markdown": "^7.1.1",
     "parcel": "^2.3.2",
-    "typedoc": "^0.22.11",
+    "typedoc": "^0.22.12",
     "typedoc-github-wiki-theme": "^1.0.0",
-    "typedoc-plugin-markdown": "^3.11.12",
-    "typescript": "^4.5.5"
+    "typedoc-plugin-markdown": "^3.11.14",
+    "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@frank-mayer/magic": "^1.4.0",
-    "path-browserify": "^1.0.1"
+    "@frank-mayer/magic": "^1.5.0"
   }
 }

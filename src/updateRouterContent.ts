@@ -1,11 +1,10 @@
 import { htmlError } from "./htmlError";
 import { insertPlaceholders } from "./insertPlaceholders";
-import { join } from "path-browserify";
 import { router } from "./router";
-import { Client } from "@frank-mayer/magic";
+import { Client, path as P } from "@frank-mayer/magic";
 
 const htmlLocationFromPath = (path: string) => {
-  const url = join(router.dataset.content, path + ".html");
+  const url = P.join(router.dataset.content, path + ".html");
   if (url[0] === "/") {
     return url;
   } else {
@@ -19,16 +18,13 @@ export const updateRouterContent = async (path: string) => {
   try {
     const htmlLocation = htmlLocationFromPath(path);
     if (routerCache.has(htmlLocation)) {
-      console.debug("Using cached content for", htmlLocation);
       router.innerHTML = routerCache.get(htmlLocation)!;
     } else {
-      console.debug("Fetching content for", htmlLocation);
       const resp = await fetch(htmlLocation);
       if (resp.ok) {
         const html = await resp.text();
         routerCache.set(htmlLocation, html);
         router.innerHTML = html;
-        insertPlaceholders(router);
       } else {
         router.innerHTML = htmlError(
           `${resp.status} ${resp.statusText}`,
@@ -36,6 +32,7 @@ export const updateRouterContent = async (path: string) => {
         );
       }
     }
+    insertPlaceholders(router);
   } catch (err) {
     router.innerHTML = htmlError(JSON.stringify(err));
   }
@@ -44,10 +41,8 @@ export const updateRouterContent = async (path: string) => {
 if (!Client.saveData) {
   (async () => {
     for (const a of Array.from(document.querySelectorAll("a[data-route]"))) {
-      console.debug("Preloading", (a as HTMLElement).dataset.route);
-      const htmlLocation = htmlLocationFromPath(
-        (a as HTMLElement).dataset.route!
-      );
+      const route = P.resolve((a as HTMLElement).dataset.route!);
+      const htmlLocation = htmlLocationFromPath(route);
       const resp = await fetch(htmlLocation);
       if (resp.ok) {
         const html = await resp.text();

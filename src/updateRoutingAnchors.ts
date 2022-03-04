@@ -20,13 +20,11 @@ const onRoutingAnchorClick = (ev: MouseEvent) => {
   performNavigation(navigate(route));
 };
 
-const updateRoutingAnchor = (a: HTMLAnchorElement) => {
-  a.setAttribute("href", P.join(router.dataset.route!, a.dataset.route!));
-  a.addEventListener("click", onRoutingAnchorClick, elOptions);
-};
-
 export const updateRoutingAnchors = (target: ParentNode = document.body) => {
-  (
+  for (const a of Array.from(
     target.querySelectorAll("a[data-route]") as NodeListOf<HTMLAnchorElement>
-  ).forEach(updateRoutingAnchor);
+  )) {
+    a.setAttribute("href", P.join(router.dataset.route!, a.dataset.route!));
+    a.addEventListener("click", onRoutingAnchorClick, elOptions);
+  }
 };

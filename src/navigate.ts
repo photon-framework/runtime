@@ -1,5 +1,5 @@
 import { router } from "./router";
-import { path as P } from "@frank-mayer/magic";
+import { nextEventLoop, path as P } from "@frank-mayer/magic";
 import { RoutedEvent, RoutingEvent } from "./eventListener";
 import { updateRouterContent } from "./updateRouterContent";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
@@ -29,6 +29,7 @@ export const performNavigation = async (
     }
 
     await updateRouterContent(newLocation);
+    await nextEventLoop();
     updateRoutingAnchors();
     router.dispatchEvent(new RoutedEvent(newLocation));
   }

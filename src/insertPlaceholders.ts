@@ -14,12 +14,17 @@ export const insertPlaceholders = async (root: Element) => {
         P.resolve(el.getAttribute("src")!),
       ];
 
-      let html: string;
+      let html: string | undefined = undefined;
 
       for (const src of srcs) {
         if (photonRefCache.has(src)) {
           html = photonRefCache.get(src)!;
-        } else {
+          break;
+        }
+      }
+
+      if (!html) {
+        for (const src of srcs) {
           const resp = await fetch(src);
           if (resp.ok) {
             html = await resp.text();

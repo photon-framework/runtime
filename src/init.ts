@@ -3,8 +3,6 @@ import { router } from "./router";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
 
 export const init = () => {
-  updateRoutingAnchors();
-
   if (router.innerHTML.length === 0 || router.dataset.route === undefined) {
     let route: string;
     if (router.dataset.route) {
@@ -18,6 +16,8 @@ export const init = () => {
     }
 
     performNavigation(navigate(route), document.title, true);
+  } else {
+    updateRoutingAnchors();
   }
 };
 

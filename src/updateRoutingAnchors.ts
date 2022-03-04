@@ -8,23 +8,30 @@ const elOptions: AddEventListenerOptions = {
 };
 
 const onRoutingAnchorClick = (ev: MouseEvent) => {
-  ev.preventDefault();
-
   const a = ev.target as HTMLAnchorElement;
 
   const route = a.dataset.route;
   if (!route) {
+    console.warn("No route specified for anchor", a);
     return;
   }
+
+  ev.preventDefault();
 
   performNavigation(navigate(route));
 };
 
-export const updateRoutingAnchors = (target: ParentNode = document.body) => {
-  for (const a of Array.from(
-    target.querySelectorAll("a[data-route]") as NodeListOf<HTMLAnchorElement>
-  )) {
-    a.setAttribute("href", P.join(router.dataset.route!, a.dataset.route!));
+export const updateRoutingAnchors = () => {
+  (
+    document.querySelectorAll("a[data-route]") as NodeListOf<HTMLAnchorElement>
+  ).forEach((a) => {
+    a.href = P.join(router.dataset.route!, a.dataset.route!);
+
+    if (a.hasAttribute("data-linked")) {
+      return;
+    }
+    a.toggleAttribute("data-linked", true);
+
     a.addEventListener("click", onRoutingAnchorClick, elOptions);
-  }
+  });
 };

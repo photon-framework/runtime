@@ -1,9 +1,10 @@
+import { htmlError } from "./htmlError";
 import { insertPlaceholders } from "./insertPlaceholders";
-import { join } from "./path";
 import { router } from "./router";
+import { Client, path as P } from "@frank-mayer/magic";
 
 const htmlLocationFromPath = (path: string) => {
-  const url = join(router.dataset.content, path + ".html");
+  const url = P.join(router.dataset.content, path + ".html");
   if (url[0] === "/") {
     return url;
   } else {
@@ -11,12 +12,42 @@ const htmlLocationFromPath = (path: string) => {
   }
 };
 
+const routerCache = new Map<string, string>();
+
 export const updateRouterContent = async (path: string) => {
-  const response = await fetch(htmlLocationFromPath(path));
-  if (response.ok) {
-    router.innerHTML = await response.text();
-    await insertPlaceholders(router);
-  } else {
-    router.innerHTML = `<h1>${response.status}</h1><p>${response.statusText}</p><a href="${response.url}">${response.url}</a>`;
+  try {
+    const htmlLocation = htmlLocationFromPath(path);
+    if (routerCache.has(htmlLocation)) {
+      router.innerHTML = routerCache.get(htmlLocation)!;
+    } else {
+      const resp = await fetch(htmlLocation);
+      if (resp.ok) {
+        const html = await resp.text();
+        routerCache.set(htmlLocation, html);
+        router.innerHTML = html;
+      } else {
+        router.innerHTML = htmlError(
+          `${resp.status} ${resp.statusText}`,
+          resp.url
+        );
+      }
+    }
+    insertPlaceholders(router);
+  } catch (err) {
+    router.innerHTML = htmlError(JSON.stringify(err));
   }
 };
+
+if (!Client.saveData) {
+  (async () => {
+    for (const a of Array.from(document.querySelectorAll("a[data-route]"))) {
+      const route = P.resolve((a as HTMLElement).dataset.route!);
+      const htmlLocation = htmlLocationFromPath(route);
+      const resp = await fetch(htmlLocation);
+      if (resp.ok) {
+        const html = await resp.text();
+        routerCache.set(htmlLocation, html);
+      }
+    }
+  })();
+}

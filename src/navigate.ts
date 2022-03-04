@@ -1,5 +1,5 @@
 import { router } from "./router";
-import { join } from "./path";
+import { path as P } from "@frank-mayer/magic";
 import { RoutedEvent, RoutingEvent } from "./eventListener";
 import { updateRouterContent } from "./updateRouterContent";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
@@ -14,7 +14,7 @@ export const navigate = (
   const newPath =
     path[0] === "/"
       ? path
-      : join(router.dataset.route ?? window.location.pathname, path);
+      : P.join(router.dataset.route ?? window.location.pathname, path);
   window.history.pushState({ pageTitle }, pageTitle, newPath);
   return (router.dataset.route = newPath);
 };

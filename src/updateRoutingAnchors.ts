@@ -1,6 +1,6 @@
 import { router } from "./router";
 import { navigate, performNavigation } from "./navigate";
-import { join } from "./path";
+import { path as P } from "@frank-mayer/magic";
 
 const elOptions: AddEventListenerOptions = {
   passive: false,
@@ -21,7 +21,7 @@ const onRoutingAnchorClick = (ev: MouseEvent) => {
 };
 
 const updateRoutingAnchor = (a: HTMLAnchorElement) => {
-  a.setAttribute("href", join(router.dataset.route!, a.dataset.route!));
+  a.setAttribute("href", P.join(router.dataset.route!, a.dataset.route!));
   a.addEventListener("click", onRoutingAnchorClick, elOptions);
 };
 

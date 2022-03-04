@@ -1,9 +1,9 @@
-import { updateRoutingAnchors } from "./updateRoutingAnchors";
 import { router } from "./router";
 import { insertPlaceholders } from "./insertPlaceholders";
 import { performNavigation } from "./navigate";
+import { init } from "./init";
 
-updateRoutingAnchors();
+init();
 
 window.history.replaceState(
   { pageTitle: document.title },

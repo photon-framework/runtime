@@ -25,6 +25,18 @@ export const updateRouterContent = async (path: string) => {
         const html = await resp.text();
         routerCache.set(htmlLocation, html);
         router.innerHTML = html;
+      } else if (resp.status === 404) {
+        const p404 = router.dataset.fallback ?? router.dataset.default;
+        const resp2 = await fetch(p404);
+        if (resp2.ok) {
+          const html = await resp2.text();
+          router.innerHTML = html;
+        } else {
+          router.innerHTML = htmlError(
+            `${resp.status} ${resp.statusText}`,
+            resp.url
+          );
+        }
       } else {
         router.innerHTML = htmlError(
           `${resp.status} ${resp.statusText}`,
@@ -45,8 +57,7 @@ if (!Client.saveData) {
       const htmlLocation = htmlLocationFromPath(route);
       const resp = await fetch(htmlLocation);
       if (resp.ok) {
-        const html = await resp.text();
-        routerCache.set(htmlLocation, html);
+        routerCache.set(htmlLocation, await resp.text());
       }
     }
   })();

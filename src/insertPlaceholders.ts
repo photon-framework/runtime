@@ -5,7 +5,7 @@ const photonRefCache = new Map<string, string>();
 const placeholder = new RegExp("\\{\\{([^\\{\\}]+)\\}\\}", "g");
 
 export const insertPlaceholders = async (root: Element) => {
-  for await (const el of Array.from(
+  for (const el of Array.from(
     root.querySelectorAll("photon-ref[src]") as NodeListOf<HTMLElement>
   )) {
     try {
@@ -31,9 +31,10 @@ export const insertPlaceholders = async (root: Element) => {
             photonRefCache.set(src, html);
             break;
           } else if (resp.status === 404) {
+            html ??= htmlError(`${resp.status} ${resp.statusText}`, resp.url);
             continue;
           } else {
-            html = htmlError(`${resp.status} ${resp.statusText}`, resp.url);
+            html ??= htmlError(`${resp.status} ${resp.statusText}`, resp.url);
           }
         }
       }
@@ -50,7 +51,9 @@ export const insertPlaceholders = async (root: Element) => {
         return "";
       });
     } catch (err) {
-      el.innerHTML = htmlError(JSON.stringify(err));
+      el.innerHTML = htmlError(
+        "Exception thrown " + JSON.stringify(err, undefined, 2)
+      );
     }
   }
 };

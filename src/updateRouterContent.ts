@@ -44,7 +44,7 @@ export const updateRouterContent = async (path: string) => {
         );
       }
     }
-    insertPlaceholders(router);
+    await insertPlaceholders(router);
   } catch (err) {
     router.innerHTML = htmlError(JSON.stringify(err));
   }
@@ -55,6 +55,9 @@ if (!Client.saveData) {
     for (const a of Array.from(document.querySelectorAll("a[data-route]"))) {
       const route = P.resolve((a as HTMLElement).dataset.route!);
       const htmlLocation = htmlLocationFromPath(route);
+      if (routerCache.has(htmlLocation)) {
+        continue;
+      }
       const resp = await fetch(htmlLocation);
       if (resp.ok) {
         routerCache.set(htmlLocation, await resp.text());

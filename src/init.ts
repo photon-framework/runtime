@@ -1,5 +1,6 @@
 import { navigate, performNavigation } from "./navigate";
 import { router } from "./router";
+import { updateHtmlLang } from "./updateHtmlLang";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
 
 export const init = () => {
@@ -18,6 +19,7 @@ export const init = () => {
     performNavigation(navigate(route), document.title, true);
   } else {
     updateRoutingAnchors();
+    updateHtmlLang();
   }
 };
 

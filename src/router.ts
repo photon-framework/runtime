@@ -4,6 +4,7 @@ const router = document.querySelector("*[photon-router]") as HTMLElement & {
     content: string;
     default: string;
     fallback?: string;
+    langSegment?: string;
   };
 };
 

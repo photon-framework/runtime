@@ -1,7 +1,7 @@
 import { htmlError } from "./htmlError";
 import { insertPlaceholders } from "./insertPlaceholders";
 import { router } from "./router";
-import { Client, path as P } from "@frank-mayer/magic";
+import { client, path as P } from "@frank-mayer/magic";
 
 const htmlLocationFromPath = (path: string) => {
   const url = P.join(router.dataset.content, path + ".html");
@@ -50,7 +50,7 @@ export const updateRouterContent = async (path: string) => {
   }
 };
 
-if (!Client.saveData) {
+if (!client.saveData) {
   (async () => {
     for (const a of Array.from(document.querySelectorAll("a[data-route]"))) {
       const route = P.resolve((a as HTMLElement).dataset.route!);

@@ -3,6 +3,7 @@ import { nextEventLoop, path as P } from "@frank-mayer/magic";
 import { RoutedEvent, RoutingEvent } from "./eventListener";
 import { updateRouterContent } from "./updateRouterContent";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
+import { updateHtmlLang } from "./updateHtmlLang";
 
 /**
  * Push a new location to the url without reloading the page.
@@ -31,6 +32,7 @@ export const performNavigation = async (
     await updateRouterContent(newLocation);
     await nextEventLoop();
     updateRoutingAnchors();
+    updateHtmlLang();
     router.dispatchEvent(new RoutedEvent(newLocation));
   }
 };

@@ -8,15 +8,13 @@ const elOptions: AddEventListenerOptions = {
 };
 
 const onRoutingAnchorClick = (ev: MouseEvent) => {
+  ev.preventDefault();
   const a = ev.target as HTMLAnchorElement;
 
   const route = a.dataset.route;
   if (!route) {
-    console.warn("No route specified for anchor", a);
-    return;
+    throw new Error(`No route specified for anchor, ${a.outerHTML}`);
   }
-
-  ev.preventDefault();
 
   performNavigation(navigate(route));
 };

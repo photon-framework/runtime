@@ -28,7 +28,7 @@
   "homepage": "https://github.com/photon-framework",
   "devDependencies": {
     "jsdoc-to-markdown": "^7.1.1",
-    "parcel": "^2.3.2",
+    "parcel": "^2.4.1",
     "typedoc": "^0.22.13",
     "typedoc-github-wiki-theme": "^1.0.0",
     "typedoc-plugin-markdown": "^3.11.14",

@@ -1,6 +1,6 @@
 import { router } from "./router";
 import { insertPlaceholders } from "./insertPlaceholders";
-import { performNavigation } from "./navigate";
+import { performNavigation, performNavigationPop } from "./navigate";
 import { init } from "./init";
 
 init();
@@ -18,7 +18,7 @@ window.addEventListener(
   (ev) => {
     const state = ev.state;
     if (state) {
-      performNavigation(location.pathname);
+      performNavigationPop(location.pathname);
     }
   },
   {

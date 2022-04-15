@@ -36,3 +36,11 @@ export const performNavigation = async (
     router.dispatchEvent(new RoutedEvent(newLocation));
   }
 };
+
+export const performNavigationPop = async (newLocation: string) => {
+  await updateRouterContent(newLocation);
+  await nextEventLoop();
+  updateRoutingAnchors();
+  updateHtmlLang();
+  router.dispatchEvent(new RoutedEvent(newLocation));
+};

@@ -1,6 +1,6 @@
 import { router } from "./router";
 import { insertPlaceholders } from "./insertPlaceholders";
-import { performNavigation, performNavigationPop } from "./navigate";
+import { performNavigationPop } from "./navigate";
 import { init } from "./init";
 
 init();

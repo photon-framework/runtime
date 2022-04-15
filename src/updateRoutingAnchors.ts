@@ -1,6 +1,6 @@
 import { router } from "./router";
 import { navigate, performNavigation } from "./navigate";
-import { path as P } from "@frank-mayer/magic";
+import { join } from "@frank-mayer/magic";
 
 const elOptions: AddEventListenerOptions = {
   passive: false,
@@ -23,7 +23,7 @@ export const updateRoutingAnchors = () => {
   (
     document.querySelectorAll("a[data-route]") as NodeListOf<HTMLAnchorElement>
   ).forEach((a) => {
-    a.href = P.join(router.dataset.route!, a.dataset.route!);
+    a.href = join(router.dataset.route!, a.dataset.route!);
 
     if (a.hasAttribute("data-linked")) {
       return;

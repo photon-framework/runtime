@@ -1,5 +1,5 @@
 import { htmlError } from "./htmlError";
-import { path as P } from "@frank-mayer/magic";
+import { resolve } from "@frank-mayer/magic";
 
 const photonRefCache = new Map<string, string>();
 const placeholder = new RegExp("\\{\\{([^\\{\\}]+)\\}\\}", "g");
@@ -10,8 +10,8 @@ export const insertPlaceholders = async (root: Element) => {
   )) {
     try {
       const srcs = [
-        P.resolve("/", el.getAttribute("src")!),
-        P.resolve(el.getAttribute("src")!),
+        resolve("/", el.getAttribute("src")!),
+        resolve(el.getAttribute("src")!),
       ];
 
       let html: string | undefined = undefined;

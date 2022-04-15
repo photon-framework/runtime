@@ -1,10 +1,10 @@
 import { htmlError } from "./htmlError";
 import { insertPlaceholders } from "./insertPlaceholders";
 import { router } from "./router";
-import { client, path as P } from "@frank-mayer/magic";
+import { client, join, resolve } from "@frank-mayer/magic";
 
 const htmlLocationFromPath = (path: string) => {
-  const url = P.join(router.dataset.content, path + ".html");
+  const url = join(router.dataset.content, path + ".html");
   if (url[0] === "/") {
     return url;
   } else {
@@ -53,7 +53,7 @@ export const updateRouterContent = async (path: string) => {
 if (!client.saveData) {
   (async () => {
     for (const a of Array.from(document.querySelectorAll("a[data-route]"))) {
-      const route = P.resolve((a as HTMLElement).dataset.route!);
+      const route = resolve((a as HTMLElement).dataset.route!);
       const htmlLocation = htmlLocationFromPath(route);
       if (routerCache.has(htmlLocation)) {
         continue;

@@ -9,7 +9,14 @@ const elOptions: AddEventListenerOptions = {
 
 const onRoutingAnchorClick = (ev: MouseEvent) => {
   ev.preventDefault();
-  const a = ev.target as HTMLAnchorElement;
+  let a = ev.target as HTMLAnchorElement;
+  while (a.tagName !== "A" && a.parentElement) {
+    a = a.parentElement as HTMLAnchorElement;
+  }
+
+  if (a.tagName !== "A" && a.dataset.route) {
+    throw new Error("Invalid event target for routing anchor click");
+  }
 
   const route = a.dataset.route;
   if (!route) {

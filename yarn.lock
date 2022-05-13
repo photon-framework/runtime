@@ -28,10 +28,10 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.9.tgz#9c94189a6062f0291418ca021077983058e171ef"
   integrity sha512-vqUSBLP8dQHFPdPi9bc5GK9vRkYHJ49fsZdtoJ8EQ8ibpwk5rPKfvNIwChB0KVXcIjcepEBBd2VHC5r9Gy8ueg==
 
-"@frank-mayer/magic@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@frank-mayer/magic/-/magic-3.0.0.tgz#76141e694a95091320b3452375b04c2231d4dfae"
-  integrity sha512-Eo3ibnQweACq+xJkax9t1wBooP2k0Be5gy/smRmY4be0MPJkdS1k2Htaj9YCma+yU3Al1VpvmiUkdZVDwFfIPA==
+"@frank-mayer/magic@^3.2.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@frank-mayer/magic/-/magic-3.3.0.tgz#57ca125c143aac589a60767c227fea1a0a1f92b9"
+  integrity sha512-JFmI8xXJBij0Ih08oH+g49BMbwN7mfe62W5XsiKj8d522H4to8+tGYL9taTWumfObckXG7sr8yEPFUDDp4ElEg==
   dependencies:
     tslib "^2.3.1"
 

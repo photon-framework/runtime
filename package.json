@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "@frank-mayer/magic": "^3.0.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   }
 }

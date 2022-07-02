@@ -1,6 +1,7 @@
 import { makePath } from "./makePath";
 import type { path } from "./makePath";
 import { router } from "./router";
+import { triggerPage } from "./page";
 
 export class RoutingEvent extends CustomEvent<{
   router: HTMLElement;
@@ -44,3 +45,8 @@ export const addRoutingEventListener = <K extends keyof RouterEventMap>(
 ) => {
   router.addEventListener(type, listener as any, options);
 };
+
+addRoutingEventListener("routed", (ev) => {
+  const route = "/" + ev.detail.route.join("/");
+  triggerPage(route);
+});

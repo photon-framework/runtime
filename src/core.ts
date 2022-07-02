@@ -1,3 +1,4 @@
+import "./query";
 import { router } from "./router";
 import { insertPlaceholders } from "./insertPlaceholders";
 import { performNavigationPop } from "./navigate";

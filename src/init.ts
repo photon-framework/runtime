@@ -1,4 +1,5 @@
 import { navigate, performNavigation } from "./navigate";
+import { triggerPage } from "./page";
 import { router } from "./router";
 import { updateHtmlLang } from "./updateHtmlLang";
 import { updateRoutingAnchors } from "./updateRoutingAnchors";
@@ -20,6 +21,7 @@ export const init = () => {
   } else {
     updateRoutingAnchors();
     updateHtmlLang();
+    triggerPage(router.dataset.route);
   }
 };
 

@@ -14,16 +14,23 @@ export const page: ClassDecorator = <T extends Function>(Page: T): T | void => {
     const route = page.route.startsWith("/") ? page.route : "/" + page.route;
     pageRegister.set(route, page);
     if (route === router.dataset.route) {
-      callQueryFunction(page.onRouted);
+      callQueryFunction(page.onRouted, page);
     }
   } else {
     throw new Error(`Page "${Page.name}" has no onRouted method.`);
   }
 };
 
+let lastPage: string = "";
 export const triggerPage = (route: string): void => {
+  if (lastPage === route) {
+    return;
+  } else {
+    lastPage = route;
+  }
+
   const page = pageRegister.get(route);
   if (page) {
-    callQueryFunction(page.onRouted);
+    callQueryFunction(page.onRouted, page);
   }
 };

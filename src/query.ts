@@ -22,7 +22,8 @@ function getParamNames(func: Function) {
 }
 
 export const callQueryFunction = <R>(
-  fn: (...args: Array<string | undefined>) => R
+  fn: (...args: Array<string | undefined>) => R,
+  thisPtr?: any
 ): R => {
   const params = getParamNames(fn);
 
@@ -34,5 +35,9 @@ export const callQueryFunction = <R>(
     }
   });
 
-  return fn(...paramValues);
+  if (thisPtr) {
+    return fn.apply(thisPtr, paramValues);
+  } else {
+    return fn(...paramValues);
+  }
 };

@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    ".yarn/": true,
+    "node_modules/": true,
+    "**/*.d.ts": true,
+    "**/*.js": true,
+    "**/*.map": true
+  }
+}

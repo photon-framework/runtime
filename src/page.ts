@@ -1,6 +1,7 @@
 import { isInitialized } from "./initialized.js";
 import { callQueryFunction } from "./query";
 import { url } from "./URL.js";
+import * as globToRegexp from "glob-to-regexp";
 
 export interface CPage {
   onRouted(...params: Array<string | undefined>): void;
@@ -8,7 +9,11 @@ export interface CPage {
 
 export type FPage = (...params: Array<string | undefined>) => void;
 
-const pageRegister = new Map<string, { obj: object; key: string | symbol }>();
+const pageRegister = new Array<{
+  route: RegExp;
+  obj: object;
+  key: string | symbol;
+}>();
 
 let lastPage: string = "^";
 
@@ -19,6 +24,8 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
     route = "/" + route;
   }
 
+  const routeRegex = globToRegexp(route, { globstar: true, flags: "i" });
+
   return (target: Function | Object, propertyKey?: string | symbol) => {
     // class decorator
     if (typeof target === "function") {
@@ -28,8 +35,8 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
 
       const page = classInstances.get(target.name) as CPage;
       if ("onRouted" in page) {
-        pageRegister.set(route, { obj: page, key: "onRouted" });
-        if (route === url.pathname && isInitialized()) {
+        pageRegister.push({ route: routeRegex, obj: page, key: "onRouted" });
+        if (isInitialized() && routeRegex.test(url.pathname)) {
           lastPage = route;
           callQueryFunction(page.onRouted, page);
         }
@@ -46,11 +53,9 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
       }
       const obj = classInstances.get(target.constructor.name)!;
 
-      pageRegister.set(route, {
-        obj,
-        key: propertyKey,
-      });
-      if (route === url.pathname && isInitialized()) {
+      pageRegister.push({ route: routeRegex, obj, key: propertyKey });
+
+      if (isInitialized() && routeRegex.test(url.pathname)) {
         lastPage = route;
         callQueryFunction(target[propertyKey], page);
       }
@@ -65,8 +70,9 @@ export const triggerPage = (route: string): void => {
     lastPage = route;
   }
 
-  const page = pageRegister.get(route);
-  if (page) {
-    callQueryFunction(page.obj[page.key]!, page.obj);
+  for (const page of pageRegister) {
+    if (page.route.test(route)) {
+      callQueryFunction(page.obj[page.key], page.obj);
+    }
   }
 };

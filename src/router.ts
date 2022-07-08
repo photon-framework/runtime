@@ -7,6 +7,7 @@ const router = ((window as any).router ??
     fallback: string;
     homeAsEmpty?: boolean;
     langSegment?: string;
+    languages?: string;
   };
 };
 

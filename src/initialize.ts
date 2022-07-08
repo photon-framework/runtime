@@ -6,7 +6,7 @@ import { setInitialized } from "./initialized.js";
 
 export const initialize = async () => {
   await contentLoader.loadRefs(document);
-  controller.routingAnchors();
+  controller.updateRoutingAnchors();
   await controller.navigateTo(url.pathname);
   setInitialized();
 };

@@ -41,9 +41,9 @@ class Controller {
       fn();
     }
 
-    this.routingAnchors();
-
+    this.updateRoutingAnchors();
     triggerPage(url.pathname);
+    this.updateTitle();
 
     this.routerState = "idle";
     await nextEventLoop();
@@ -52,7 +52,7 @@ class Controller {
 
   private readonly routingAnchorsStore = new Map<string, string>();
 
-  public routingAnchors(): void {
+  public updateRoutingAnchors(): void {
     for (const a of Array.from<HTMLAnchorElement>(
       document.querySelectorAll("a[href]")
     )) {
@@ -92,6 +92,13 @@ class Controller {
           { passive: false }
         );
       }
+    }
+  }
+
+  private updateTitle(): void {
+    const newTitle = render(document.title, view);
+    if (newTitle !== document.title) {
+      document.title = newTitle;
     }
   }
 }

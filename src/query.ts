@@ -3,6 +3,14 @@ export const searchParams: ReadonlyMap<string, string> = new Map<
   string
 >();
 
+export const searchParamsRecord = (): Readonly<Record<string, string>> => {
+  const rec: Record<string, string> = {};
+  for (const q of searchParams) {
+    rec[q[0]] = q[1];
+  }
+  return rec;
+};
+
 new URL(window.location.href).searchParams.forEach((value, key) => {
   (searchParams as Map<string, string>).set(key, value);
 });

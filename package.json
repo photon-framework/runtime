@@ -1,14 +1,13 @@
 {
   "name": "photon-re",
   "displayName": "photon runtime",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "type": "module",
   "description": "Simple and high performance web frontend framework",
   "main": "index.js",
   "scripts": {
-    "build-core": "yarn run parcel build ./src/core.ts --no-source-maps",
-    "rename-core": "mv index.js core.js",
-    "build-tsc": "yarn run tsc -p . ",
+    "build": "yarn run tsc -p ./tsconfig.json",
+    "copy": "yarn build && rm -rf ../homepage/node_modules/photon-re/* && cp -r ./src ../homepage/node_modules/photon-re/src && cp -r ./node_modules/xxhash-wasm ../homepage/node_modules/ && cp -r ./node_modules/mustache ../homepage/node_modules/ && cp -r ./node_modules/glob-to-regexp ../homepage/node_modules/ && cp ./* ../homepage/node_modules/photon-re/",
     "deploy": "yarn run build && yarn publish",
     "docs": "rm -rf ./docs/* && rm -rf ../photon.wiki/*.md && node docs.cjs"
   },
@@ -27,15 +26,19 @@
   },
   "homepage": "https://github.com/photon-framework",
   "devDependencies": {
+    "@types/glob-to-regexp": "^0.4.1",
     "jsdoc-to-markdown": "^7.1.1",
-    "parcel": "^2.4.1",
-    "typedoc": "^0.22.15",
-    "typedoc-github-wiki-theme": "^1.0.0",
-    "typedoc-plugin-markdown": "^3.12.0",
-    "typescript": "^4.6.3"
+    "typedoc": "^0.23.5",
+    "typedoc-github-wiki-theme": "^1.0.1",
+    "typedoc-plugin-markdown": "^3.13.3",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@frank-mayer/magic": "^3.0.0",
-    "tslib": "^2.3.1"
+    "@frank-mayer/magic": "^4.0.0",
+    "@types/mustache": "^4.1.3",
+    "glob-to-regexp": "^0.4.1",
+    "mustache": "^4.2.0",
+    "tslib": "^2.4.0",
+    "xxhash-wasm": "^1.0.1"
   }
 }

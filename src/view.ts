@@ -40,6 +40,11 @@ class View {
   }
 
   public readonly title: string = document.title;
+
+  public plus<T>(obj: T): this & T {
+    const copyObj = Object.assign({}, obj);
+    return Object.assign(copyObj, this);
+  }
 }
 
 export const view = new View();

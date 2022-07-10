@@ -1,10 +1,12 @@
-node_modules/
-.npmignore
-docs/
+.github
+.vscode
+.yarn
+node_modules
 .gitattributes
 .gitignore
-icon.svg
-docs.cjs
+.yarnrc.yml
 tsconfig.json
+yarn.lock
+.npmignore
 *.ts
 !*.d.ts

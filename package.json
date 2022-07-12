@@ -1,7 +1,7 @@
 {
   "name": "photon-re",
   "displayName": "photon runtime",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Simple and high performance web frontend framework",
   "main": "index.js",

@@ -1,7 +1,7 @@
 import { dotenv } from "./dotenv.js";
 
 const consoleCss =
-  "background:black;color:#9683EC;font-size:1rem;padding:0.2rem 0.5rem;";
+  "background:black;color:#9683EC;font-size:0.8rem;padding:0.2rem 0.5rem;margin:0;";
 
 const format = (message: any) => {
   if (typeof message === "string") {
@@ -14,10 +14,14 @@ const format = (message: any) => {
 /** @internal */
 export const logger = {
   log: (message: any) => {
-    console.log(...format(message));
+    if (!dotenv.production) {
+      console.log(...format(message));
+    }
   },
   warn: (message: any) => {
-    console.warn(...format(message));
+    if (!dotenv.production) {
+      console.warn(...format(message));
+    }
   },
   error: (message: any) => {
     console.error(...format(message));

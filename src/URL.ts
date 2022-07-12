@@ -89,7 +89,7 @@ class MyUrl implements URL {
   }
 
   public constructor(url: string | URL) {
-    logger.debug("Initializing URL", url);
+    logger.debug(`Initializing URL "${url}"`);
     this._url = new URL(url);
   }
 

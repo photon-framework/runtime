@@ -6,7 +6,6 @@ node_modules
 .gitignore
 .yarnrc.yml
 tsconfig.json
+tsconfig.dev.json
 yarn.lock
 .npmignore
-*.ts
-!*.d.ts

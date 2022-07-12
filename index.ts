@@ -10,3 +10,4 @@ if (
 }
 
 export * from "./src/page.js";
+export * from "./src/dotenv.js";

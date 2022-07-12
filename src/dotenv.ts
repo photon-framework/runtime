@@ -1,3 +1,6 @@
+/**
+ * Enviroment information.
+ */
 export const dotenv = {
   production:
     document.location.hostname !== "localhost" &&

@@ -1,6 +1,7 @@
 import { disposeNode, join } from "@frank-mayer/magic";
 import { AsyncFunction } from "./AsyncFunction.js";
 import { emptyStringHash, hashToString } from "./hash.js";
+import { logger } from "./logger.js";
 import { router } from "./router.js";
 
 type Resp = { text: string; ok: boolean; status: number };
@@ -45,6 +46,7 @@ class ContentLoader {
     if (this.cache.has(path)) {
       const cacheEntry = this.cache.get(path)!;
       if (cacheEntry.ok) {
+        logger.debug(`Cache hit for "${path}"`);
         return cacheEntry;
       } else {
         return this.error();
@@ -77,9 +79,11 @@ class ContentLoader {
           hash,
           scripts,
         };
+        logger.debug(`Storing "${path}" in cache`);
         this.cache.set(path, entry);
         return entry;
       } else {
+        logger.debug(`Storing error for "${path}" in cache`);
         this.cache.set(path, {
           ok: false,
           content: "",

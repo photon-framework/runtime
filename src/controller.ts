@@ -3,6 +3,7 @@ import { nextEventLoop } from "@frank-mayer/magic/Timing";
 import { render } from "mustache";
 import { contentLoader } from "./contentLoader.js";
 import { hashToString } from "./hash.js";
+import { logger } from "./logger.js";
 import { triggerPage } from "./page.js";
 import { router } from "./router.js";
 import { url } from "./URL.js";
@@ -20,20 +21,29 @@ class Controller {
     }
   }
 
-  public async navigateTo(path: string, a?: HTMLAnchorElement): Promise<void> {
+  public async navigateTo(
+    path: string,
+    a?: HTMLAnchorElement,
+    back: boolean = false
+  ): Promise<void> {
     this.routerState = "routing";
 
     url.pathname = path;
+    logger.debug(`navigating to "${url.pathname}"`);
 
+    // change language
     if (a && a.hreflang) {
+      logger.debug(`setting language to "${a.hreflang}"`);
       document.documentElement.setAttribute("lang", a.hreflang);
     } else if (a && a.lang) {
+      logger.debug(`setting language to "${a.lang}"`);
       document.documentElement.setAttribute("lang", a.lang);
     } else if (router.dataset.langSegment) {
       const langSegment = Number.parseInt(router.dataset.langSegment, 10);
       if (!isNaN(langSegment) && langSegment > -1) {
         const lang = path.split("/").filter(Boolean)[langSegment];
         if (lang) {
+          logger.debug(`setting language to "${lang}"`);
           document.documentElement.setAttribute("lang", lang);
         }
       }
@@ -48,7 +58,10 @@ class Controller {
     const oldHash = await hashToString(router.innerHTML);
     const newContent = await contentLoader.load(path);
     if (oldHash !== newContent.hash) {
+      logger.debug("Content changed, rendering page");
       router.innerHTML = newContent.content;
+    } else {
+      logger.debug("Content unchanged, skipping rendering");
     }
 
     for (const fn of newContent.scripts) {
@@ -60,8 +73,10 @@ class Controller {
     this.updateTitle();
 
     this.routerState = "idle";
-    await nextEventLoop();
-    window.scrollTo(0, 0);
+    if (!back) {
+      await nextEventLoop();
+      window.scrollTo(0, 0);
+    }
   }
 
   private readonly routingAnchorsStore = new Map<string, string>();

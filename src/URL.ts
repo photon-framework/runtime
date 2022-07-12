@@ -1,6 +1,7 @@
 import { searchParamsRecord } from "./query.js";
 import { normalize } from "@frank-mayer/magic/Path";
 import { router } from "./router.js";
+import { logger } from "./logger.js";
 
 class MyUrl implements URL {
   private readonly _url: URL;
@@ -50,16 +51,20 @@ class MyUrl implements URL {
       value = router.dataset.homeAsEmpty ? "/" : router.dataset.default;
     }
 
-    this._url.pathname = value;
+    if (this._url.pathname !== value) {
+      this._url.pathname = value;
 
-    if (window.history && window.history.pushState) {
-      window.history.pushState(
-        { pageTitle: value },
-        value,
-        this.hash !== "#" ? value + this.hash : value
-      );
-    } else {
-      window.location.pathname = value;
+      if (window.history && window.history.pushState) {
+        window.history.pushState(
+          { path: value },
+          value,
+          this.hash !== "#"
+            ? value + this._url.search + this._url.search + this.hash
+            : value
+        );
+      } else {
+        window.location.pathname = value;
+      }
     }
   }
 
@@ -83,7 +88,8 @@ class MyUrl implements URL {
     return this._url.username;
   }
 
-  public constructor(url: string) {
+  public constructor(url: string | URL) {
+    logger.debug("Initializing URL", url);
     this._url = new URL(url);
   }
 
@@ -97,4 +103,4 @@ class MyUrl implements URL {
 }
 
 /** @internal */
-export const url: URL = new MyUrl(document.URL);
+export const url: URL = new MyUrl(document.location.href);

@@ -20,12 +20,26 @@ class Controller {
     }
   }
 
-  public async navigateTo(path: string): Promise<void> {
+  public async navigateTo(path: string, a?: HTMLAnchorElement): Promise<void> {
     this.routerState = "routing";
 
     url.pathname = path;
 
-    if (path === "" || path === "/") {
+    if (a && a.hreflang) {
+      document.documentElement.setAttribute("lang", a.hreflang);
+    } else if (a && a.lang) {
+      document.documentElement.setAttribute("lang", a.lang);
+    } else if (router.dataset.langSegment) {
+      const langSegment = Number.parseInt(router.dataset.langSegment, 10);
+      if (!isNaN(langSegment) && langSegment > -1) {
+        const lang = path.split("/").filter(Boolean)[langSegment];
+        if (lang) {
+          document.documentElement.setAttribute("lang", lang);
+        }
+      }
+    }
+
+    if (!path || path === "/") {
       path = router.dataset.default;
     }
 
@@ -87,7 +101,7 @@ class Controller {
           (evt) => {
             evt.preventDefault();
             const hrefUrl = new URL(a.href);
-            this.navigateTo(hrefUrl.pathname);
+            this.navigateTo(hrefUrl.pathname, a);
           },
           { passive: false }
         );

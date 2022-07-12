@@ -57,7 +57,7 @@ const classInstances = new Map<string, object>();
  *
  * Can be used on a class or a method.
  *
- * @param route The route to match.
+ * @param route The route to match. Can be a glob pattern.
  *
  * @example
  * ```typescript

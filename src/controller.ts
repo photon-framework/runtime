@@ -103,5 +103,6 @@ class Controller {
   }
 }
 
+/** @internal */
 export const controller = new Controller();
 controller.routerState = "idle";

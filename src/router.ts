@@ -1,3 +1,4 @@
+/** @internal */
 const router = ((window as any).router ??
   document.querySelector("*[photon-router]")) as HTMLElement & {
   dataset: {

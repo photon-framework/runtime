@@ -1,8 +1,14 @@
+/**
+ * Search params, the app was initialized with.
+ */
 export const searchParams: ReadonlyMap<string, string> = new Map<
   string,
   string
 >();
 
+/**
+ * Search params, the app was initialized with.
+ */
 export const searchParamsRecord = (): Readonly<Record<string, string>> => {
   const rec: Record<string, string> = {};
   for (const q of searchParams) {
@@ -29,6 +35,12 @@ function getParamNames(func: Function) {
   return Array.from(result);
 }
 
+/**
+ * Call a function and fill the arguments with the search params.
+ * @param fn The function to call.
+ * @param thisPtr The this pointer to use for the function.
+ * @returns The return value of the function.
+ */
 export const callQueryFunction = <R>(
   fn: (...args: Array<string | undefined>) => R,
   thisPtr?: any

@@ -3,10 +3,43 @@ import { callQueryFunction } from "./query";
 import { url } from "./URL.js";
 import * as globToRegexp from "glob-to-regexp";
 
+/**
+ * Interface for class based pages.
+ *
+ * Should be used when using the `page` decorator on a class.
+ *
+ * @example
+ * ```typescript
+ * @page("/my-page")
+ * class MyPage extends Page {
+ *   onRouted() {
+ *    // do special stuff when page is routed
+ *   }
+ * }
+ * ```
+ */
 export interface CPage {
   onRouted(...params: Array<string | undefined>): void;
 }
 
+/**
+ * Type for function based pages.
+ *
+ * @example
+ * ```typescript
+ * class MyPages {
+ *   @page("/foo")
+ *   private foo() {
+ *     // do stuff
+ *   }
+ *
+ *   @page("/bar")
+ *   private bar() {
+ *     // do stuff
+ *   }
+ * }
+ * ```
+ */
 export type FPage = (...params: Array<string | undefined>) => void;
 
 const pageRegister = new Array<{
@@ -19,6 +52,19 @@ let lastPage: string = "^";
 
 const classInstances = new Map<string, object>();
 
+/**
+ * Page decorator.
+ *
+ * Can be used on a class or a method.
+ *
+ * @param route The route to match.
+ *
+ * @example
+ * ```typescript
+ * @page("/foo/bar/*")
+ * class MyPage extends Page {
+ * ```
+ */
 export const page = (route: string): ClassDecorator & MethodDecorator => {
   if (!route.startsWith("/")) {
     route = "/" + route;
@@ -63,6 +109,7 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
   };
 };
 
+/** @internal */
 export const triggerPage = (route: string): void => {
   if (lastPage === route) {
     return;

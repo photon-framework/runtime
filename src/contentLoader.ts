@@ -131,4 +131,5 @@ class ContentLoader {
   }
 }
 
+/** @internal */
 export const contentLoader = new ContentLoader();

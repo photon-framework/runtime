@@ -10,10 +10,12 @@ const h64ToString = new Promise<
     .catch(rej);
 });
 
+/** @internal */
 export const hashToString = async (input: string) => {
   return (await h64ToString)(input);
 };
 
+/** @internal */
 export const emptyStringHash = new Promise<string>((res, rej) => {
   h64ToString
     .then((fn) => {

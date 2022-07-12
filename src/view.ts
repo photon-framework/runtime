@@ -47,4 +47,5 @@ class View {
   }
 }
 
+/** @internal */
 export const view = new View();

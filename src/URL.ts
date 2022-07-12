@@ -96,4 +96,5 @@ class MyUrl implements URL {
   }
 }
 
+/** @internal */
 export const url: URL = new MyUrl(document.URL);

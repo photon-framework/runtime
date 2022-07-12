@@ -1,12 +1,13 @@
 import { dotenv } from "./dotenv.js";
 
-const consoleCss = ["background: black; color: purple"];
+const consoleCss =
+  "background:black;color:#9683EC;font-size:1rem;padding:0.2rem 0.5rem;";
 
 const format = (message: any) => {
   if (typeof message === "string") {
-    return [`%c${message.trim()}`, ...consoleCss];
+    return [`%c${message.trim()}`, consoleCss];
   } else {
-    return [`%c${JSON.stringify(message, undefined, 2)}`, ...consoleCss];
+    return [`%c${JSON.stringify(message, undefined, 2)}`, consoleCss];
   }
 };
 

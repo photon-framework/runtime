@@ -1,13 +1,13 @@
-import { initialize } from "./src/initialize.js";
+import { initialize } from "./src/initialize";
 
 if (
   document.readyState === "complete" ||
   document.readyState === "interactive"
 ) {
-  initialize();
+  void initialize();
 } else {
   document.addEventListener("DOMContentLoaded", initialize);
 }
 
-export * from "./src/page.js";
-export * from "./src/dotenv.js";
+export * from "./src/page";
+export * from "./src/dotenv";

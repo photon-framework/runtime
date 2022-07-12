@@ -2,16 +2,16 @@ import xxhash from "xxhash-wasm";
 
 const h64ToString = new Promise<
   (input: string, seed?: bigint | undefined) => string
->((res, rej) => {
-  xxhash()
-    .then((xxh) => {
-      res(xxh.h64ToString);
-    })
-    .catch(rej);
-});
+    >((res, rej) => {
+      xxhash()
+        .then((xxh) => {
+          res(xxh.h64ToString);
+        })
+        .catch(rej);
+    });
 
 /** @internal */
-export const hashToString = async (input: string) => {
+export const hashToString = async(input: string) => {
   return (await h64ToString)(input);
 };
 

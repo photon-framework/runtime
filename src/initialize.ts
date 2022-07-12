@@ -1,13 +1,13 @@
-import { contentLoader } from "./contentLoader.js";
-import "./query.js";
-import { controller } from "./controller.js";
-import { url } from "./URL.js";
-import { isInitialized, setInitialized } from "./initialized.js";
+import { contentLoader } from "./contentLoader";
+import "./query";
+import { controller } from "./controller";
+import { url } from "./URL";
+import { isInitialized, setInitialized } from "./initialized";
 
 /**
  * Boot the framework.
  */
-export const initialize = async () => {
+export const initialize = async() => {
   if (isInitialized()) {
     return;
   }
@@ -18,9 +18,9 @@ export const initialize = async () => {
 
   window.addEventListener(
     "popstate",
-    (ev) => {
+    async(ev) => {
       if (ev.state) {
-        controller.navigateTo(ev.state.path, undefined, true);
+        await controller.navigateTo(ev.state.path, undefined, true);
       }
     },
     {

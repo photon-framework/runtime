@@ -2,8 +2,8 @@
   "files.exclude": {
     ".yarn/": true,
     "node_modules/": true,
-    "**/*.d.ts": true,
-    "**/*.js": true,
-    "**/*.map": true
-  }
+  },
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
 }

@@ -1,8 +1,8 @@
 import { disposeNode, join } from "@frank-mayer/magic";
-import { AsyncFunction } from "./AsyncFunction.js";
-import { emptyStringHash, hashToString } from "./hash.js";
-import { logger } from "./logger.js";
-import { router } from "./router.js";
+import { AsyncFunction } from "./AsyncFunction";
+import { emptyStringHash, hashToString } from "./hash";
+import { logger } from "./logger";
+import { router } from "./router";
 
 type Resp = { text: string; ok: boolean; status: number };
 
@@ -10,12 +10,14 @@ type ContentLoaderEntry = {
   content: string;
   ok: boolean;
   hash: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   scripts: Set<Function>;
 };
 
 type ContentLoaderValue = {
   content: string;
   hash: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   scripts: Set<Function>;
 };
 
@@ -63,6 +65,7 @@ class ContentLoader {
         const shadowEl = document.createElement("div");
         shadowEl.innerHTML = respTxt;
         await this.loadRefs(shadowEl);
+        // eslint-disable-next-line @typescript-eslint/ban-types
         const scripts = new Set<Function>();
         for (const el of Array.from(shadowEl.getElementsByTagName("script"))) {
           if (el.textContent) {
@@ -108,7 +111,7 @@ class ContentLoader {
     return this.load(router.dataset.fallback);
   }
 
-  private async fetch(path: string): Promise<Resp> {
+  private fetch(path: string): Promise<Resp> {
     if (this.openRequests.has(path)) {
       return this.openRequests.get(path)!;
     } else {

@@ -1,6 +1,6 @@
-import { isInitialized } from "./initialized.js";
+import { isInitialized } from "./initialized";
 import { callQueryFunction } from "./query";
-import { url } from "./URL.js";
+import { url } from "./URL";
 import * as globToRegexp from "glob-to-regexp";
 
 /**
@@ -48,7 +48,7 @@ const pageRegister = new Array<{
   key: string | symbol;
 }>();
 
-let lastPage: string = "^";
+let lastPage = "^";
 
 const classInstances = new Map<string, object>();
 
@@ -66,12 +66,13 @@ const classInstances = new Map<string, object>();
  * ```
  */
 export const page = (route: string): ClassDecorator & MethodDecorator => {
-  if (!route.startsWith("/")) {
-    route = "/" + route;
-  }
+  const _route = (!route.startsWith("/"))
+    ? "/" + route
+    : route;
 
-  const routeRegex = globToRegexp(route, { globstar: true, flags: "i" });
+  const routeRegex = globToRegexp(_route, { globstar: true, flags: "i" });
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   return (target: Function | Object, propertyKey?: string | symbol) => {
     // class decorator
     if (typeof target === "function") {
@@ -79,12 +80,12 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
         classInstances.set(target.name, new (target as { new (): CPage })());
       }
 
-      const page = classInstances.get(target.name) as CPage;
+      const _page = classInstances.get(target.name) as CPage;
       if ("onRouted" in page) {
         pageRegister.push({ route: routeRegex, obj: page, key: "onRouted" });
         if (isInitialized() && routeRegex.test(url.pathname)) {
-          lastPage = route;
-          callQueryFunction(page.onRouted, page);
+          lastPage = _route;
+          callQueryFunction(_page.onRouted, page);
         }
       } else {
         throw new Error(`Page "${target.name}" has no onRouted method.`);
@@ -102,7 +103,7 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
       pageRegister.push({ route: routeRegex, obj, key: propertyKey });
 
       if (isInitialized() && routeRegex.test(url.pathname)) {
-        lastPage = route;
+        lastPage = _route;
         callQueryFunction(target[propertyKey], page);
       }
     }
@@ -117,9 +118,9 @@ export const triggerPage = (route: string): void => {
     lastPage = route;
   }
 
-  for (const page of pageRegister) {
-    if (page.route.test(route)) {
-      callQueryFunction(page.obj[page.key], page.obj);
+  for (const _page of pageRegister) {
+    if (_page.route.test(route)) {
+      callQueryFunction(_page.obj[_page.key], _page.obj);
     }
   }
 };

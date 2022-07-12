@@ -1,14 +1,14 @@
 import { isAbsolute, join } from "@frank-mayer/magic/Path";
 import { nextEventLoop } from "@frank-mayer/magic/Timing";
 import { render } from "mustache";
-import { contentLoader } from "./contentLoader.js";
-import { hashToString } from "./hash.js";
-import { logger } from "./logger.js";
-import { triggerPage } from "./page.js";
-import { router } from "./router.js";
-import { url } from "./URL.js";
-import { UUID } from "./UUID.js";
-import { view } from "./view.js";
+import { contentLoader } from "./contentLoader";
+import { hashToString } from "./hash";
+import { logger } from "./logger";
+import { triggerPage } from "./page";
+import { router } from "./router";
+import { url } from "./URL";
+import { UUID } from "./UUID";
+import { view } from "./view";
 
 class Controller {
   public set routerState(value: string) {
@@ -24,11 +24,11 @@ class Controller {
   public async navigateTo(
     path: string,
     a?: HTMLAnchorElement,
-    back: boolean = false
+    back = false
   ): Promise<void> {
     this.routerState = "routing";
 
-    url.pathname = path;
+    let _path = url.pathname = path;
     logger.debug(`navigating to "${url.pathname}"`);
 
     // change language
@@ -41,7 +41,7 @@ class Controller {
     } else if (router.dataset.langSegment) {
       const langSegment = Number.parseInt(router.dataset.langSegment, 10);
       if (!isNaN(langSegment) && langSegment > -1) {
-        const lang = path.split("/").filter(Boolean)[langSegment];
+        const lang = _path.split("/").filter(Boolean)[langSegment];
         if (lang) {
           logger.debug(`setting language to "${lang}"`);
           document.documentElement.setAttribute("lang", lang);
@@ -49,14 +49,14 @@ class Controller {
       }
     }
 
-    if (!path || path === "/") {
-      path = router.dataset.default;
+    if (!_path || _path === "/") {
+      _path = router.dataset.default;
     }
 
-    path = isAbsolute(path) ? path : join(url.pathname, path);
+    _path = isAbsolute(_path) ? _path : join(url.pathname, _path);
 
     const oldHash = await hashToString(router.innerHTML);
-    const newContent = await contentLoader.load(path);
+    const newContent = await contentLoader.load(_path);
     if (oldHash !== newContent.hash) {
       logger.debug("Content changed, rendering page");
       router.innerHTML = newContent.content;
@@ -113,10 +113,10 @@ class Controller {
 
         a.addEventListener(
           "click",
-          (evt) => {
+          async(evt) => {
             evt.preventDefault();
-            const hrefUrl = new URL(a.href);
-            this.navigateTo(hrefUrl.pathname, a);
+            const localHrefUrl = new URL(a.href);
+            await this.navigateTo(localHrefUrl.pathname, a);
           },
           { passive: false }
         );

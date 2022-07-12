@@ -1,32 +1,45 @@
-import { dotenv } from "./dotenv.js";
+import { dotenv } from "./dotenv";
 
 const consoleCss =
   "background:black;color:#9683EC;font-size:0.8rem;padding:0.2rem 0.5rem;margin:0;";
 
-const format = (message: any) => {
-  if (typeof message === "string") {
-    return [`%c${message.trim()}`, consoleCss];
-  } else {
-    return [`%c${JSON.stringify(message, undefined, 2)}`, consoleCss];
-  }
+const format = (message: Array<any>) => {
+  return [
+    "%c" +
+      message
+        .map((x) => {
+          if (typeof x === "string") {
+            return x;
+          } else {
+            let t = typeof x;
+            if (t === "object" && x.constructor && x.constructor.name) {
+              t = x.constructor.name;
+            }
+
+            return `<${t}>` + JSON.stringify(x, undefined, 2);
+          }
+        })
+        .join(" "),
+    consoleCss,
+  ];
 };
 
 /** @internal */
 export const logger = {
-  log: (message: any) => {
+  log: (...message: Array<any>) => {
     if (!dotenv.production) {
       console.log(...format(message));
     }
   },
-  warn: (message: any) => {
+  warn: (...message: Array<any>) => {
     if (!dotenv.production) {
       console.warn(...format(message));
     }
   },
-  error: (message: any) => {
+  error: (...message: Array<any>) => {
     console.error(...format(message));
   },
-  debug: (message: any) => {
+  debug: (...message: Array<any>) => {
     if (!dotenv.production) {
       console.debug(...format(message));
     }

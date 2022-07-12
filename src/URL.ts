@@ -1,7 +1,7 @@
-import { searchParamsRecord } from "./query.js";
+import { searchParamsRecord } from "./query";
 import { normalize } from "@frank-mayer/magic/Path";
-import { router } from "./router.js";
-import { logger } from "./logger.js";
+import { router } from "./router";
+import { logger } from "./logger";
 
 class MyUrl implements URL {
   private readonly _url: URL;
@@ -43,27 +43,27 @@ class MyUrl implements URL {
       : path;
   }
   set pathname(value: string) {
-    value = normalize(value ?? "/");
+    let _value = normalize(value ?? "/");
 
-    if (value === router.dataset.default && router.dataset.homeAsEmpty) {
-      value = "";
-    } else if (value === "/" || value === "." || value.trim() === "") {
-      value = router.dataset.homeAsEmpty ? "/" : router.dataset.default;
+    if (_value === router.dataset.default && router.dataset.homeAsEmpty) {
+      _value = "";
+    } else if (_value === "/" || _value === "." || _value.trim() === "") {
+      _value = router.dataset.homeAsEmpty ? "/" : router.dataset.default;
     }
 
-    if (this._url.pathname !== value) {
-      this._url.pathname = value;
+    if (this._url.pathname !== _value) {
+      this._url.pathname = _value;
 
       if (window.history && window.history.pushState) {
         window.history.pushState(
-          { path: value },
-          value,
+          { path: _value },
+          _value,
           this.hash !== "#"
-            ? value + this._url.search + this._url.search + this.hash
-            : value
+            ? _value + this._url.search + this._url.search + this.hash
+            : _value
         );
       } else {
-        window.location.pathname = value;
+        window.location.pathname = _value;
       }
     }
   }

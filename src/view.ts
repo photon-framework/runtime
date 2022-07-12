@@ -1,6 +1,6 @@
-import { searchParams } from "./query.js";
-import { router } from "./router.js";
-import { url } from "./URL.js";
+import { searchParams } from "./query";
+import { router } from "./router";
+import { url } from "./URL";
 
 class View {
   constructor() {

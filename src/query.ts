@@ -1,3 +1,5 @@
+import { logger } from "./logger";
+
 /**
  * Search params, the app was initialized with.
  */
@@ -22,18 +24,24 @@ new URL(window.location.href).searchParams.forEach((value, key) => {
 });
 
 const STRIP_COMMENTS =
-  /(\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s*=[^,\)]*(('(?:\\'|[^'\r\n])*')|("(?:\\"|[^"\r\n])*"))|(\s*=[^,\)]*))/gm;
+  /(\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s*=[^,)]*(('(?:\\'|[^'\r\n])*')|("(?:\\"|[^"\r\n])*"))|(\s*=[^,)]*))/gm;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
-function getParamNames(func: Function) {
-  var fnStr = func.toString().replace(STRIP_COMMENTS, "");
-  var result = fnStr
+// eslint-disable-next-line @typescript-eslint/ban-types
+const getParamNames = (func: Function) => {
+  if (typeof func !== "function") {
+    logger.error("query::getParamNames: not a function", func);
+    return [];
+  }
+
+  const fnStr = func.toString().replace(STRIP_COMMENTS, "");
+  const result = fnStr
     .slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
     .match(ARGUMENT_NAMES);
   if (!result) {
     return [];
   }
   return Array.from(result);
-}
+};
 
 /**
  * Call a function and fill the arguments with the search params.
@@ -45,6 +53,11 @@ export const callQueryFunction = <R>(
   fn: (...args: Array<string | undefined>) => R,
   thisPtr?: any
 ): R => {
+  if (typeof fn !== "function") {
+    logger.error("query::callQueryFunction: not a function", fn);
+    return undefined as any;
+  }
+
   const params = getParamNames(fn);
 
   const paramValues = params.map((param) => {

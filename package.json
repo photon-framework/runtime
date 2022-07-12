@@ -1,13 +1,13 @@
 {
   "name": "photon-re",
   "displayName": "photon runtime",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "type": "module",
   "description": "Simple and high performance web frontend framework",
   "main": "index.js",
   "scripts": {
-    "build": "yarn run tsc -p ./tsconfig.json",
-    "copy": "yarn build && rm -rf ../homepage/node_modules/photon-re/* && cp -r ./src ../homepage/node_modules/photon-re/src && cp -r ./node_modules/xxhash-wasm ../homepage/node_modules/ && cp -r ./node_modules/mustache ../homepage/node_modules/ && cp -r ./node_modules/glob-to-regexp ../homepage/node_modules/ && cp ./* ../homepage/node_modules/photon-re/",
+    "lint": "eslint --fix --ext .ts .",
+    "copy": "yarn lint && rm -rf ../homepage/node_modules/photon-re/* && cp -r ./src ../homepage/node_modules/photon-re/src && cp -r ./node_modules/xxhash-wasm ../homepage/node_modules/ && cp -r ./node_modules/mustache ../homepage/node_modules/ && cp -r ./node_modules/glob-to-regexp ../homepage/node_modules/ && cp ./* ../homepage/node_modules/photon-re/",
     "deploy": "yarn run build && yarn publish",
     "docs": "rm -rf ./docs/* && rm -rf ../photon.wiki/*.md && node docs.cjs"
   },
@@ -27,6 +27,10 @@
   "homepage": "https://github.com/photon-framework",
   "devDependencies": {
     "@types/glob-to-regexp": "^0.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
+    "eslint-plugin-import": "^2.26.0",
     "jsdoc-to-markdown": "^7.1.1",
     "typedoc": "^0.23.7",
     "typedoc-github-wiki-theme": "^1.0.1",

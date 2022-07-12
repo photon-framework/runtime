@@ -81,11 +81,11 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
       }
 
       const _page = classInstances.get(target.name) as CPage;
-      if ("onRouted" in page) {
-        pageRegister.push({ route: routeRegex, obj: page, key: "onRouted" });
+      if ("onRouted" in _page) {
+        pageRegister.push({ route: routeRegex, obj: _page, key: "onRouted" });
         if (isInitialized() && routeRegex.test(url.pathname)) {
           lastPage = _route;
-          callQueryFunction(_page.onRouted, page);
+          callQueryFunction(_page.onRouted, _page);
         }
       } else {
         throw new Error(`Page "${target.name}" has no onRouted method.`);
@@ -104,7 +104,7 @@ export const page = (route: string): ClassDecorator & MethodDecorator => {
 
       if (isInitialized() && routeRegex.test(url.pathname)) {
         lastPage = _route;
-        callQueryFunction(target[propertyKey], page);
+        callQueryFunction(target[propertyKey], obj);
       }
     }
   };

@@ -24,12 +24,14 @@ class Controller {
   public async navigateTo(
     path: string,
     a?: HTMLAnchorElement,
-    back = false
+    fromNavigationStack = false
   ): Promise<void> {
     this.routerState = "routing";
 
-    let _path = url.pathname = path;
-    logger.debug(`navigating to "${url.pathname}"`);
+    url.pathname = [path, !fromNavigationStack];
+    let _path = url.pathname;
+
+    logger.debug(`navigating to "${_path}"`);
 
     // change language
     if (a && a.hreflang) {
@@ -73,7 +75,7 @@ class Controller {
     this.updateTitle();
 
     this.routerState = "idle";
-    if (!back) {
+    if (!fromNavigationStack) {
       await nextEventLoop();
       window.scrollTo(0, 0);
     }

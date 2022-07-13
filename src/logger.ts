@@ -24,7 +24,11 @@ const format = (message: Array<any>) => {
   ];
 };
 
-/** @internal */
+/**
+ * Photon Logger
+ *
+ * Only errors are logged in production.
+ */
 export const logger = {
   log: (...message: Array<any>) => {
     if (!dotenv.production) {

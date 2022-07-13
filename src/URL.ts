@@ -36,35 +36,55 @@ class MyUrl implements URL {
     return this._url.password;
   }
 
-  get pathname(): string {
-    const path = normalize(this._url.pathname);
-    return path === router.dataset.default && router.dataset.homeAsEmpty
-      ? "/"
-      : path;
-  }
-  set pathname(value: string) {
-    let _value = normalize(value ?? "/");
+  /** @internal */
+  private firstNavigation = true;
 
-    if (_value === router.dataset.default && router.dataset.homeAsEmpty) {
-      _value = "";
-    } else if (_value === "/" || _value === "." || _value.trim() === "") {
-      _value = router.dataset.homeAsEmpty ? "/" : router.dataset.default;
+  get pathname(): string {
+    return normalize(this._url.pathname);
+  }
+  set pathname(value: string|[string, boolean]) {
+    let _value = normalize((
+      (typeof value === "string") ? value : value[0]
+    ) ?? "/");
+
+    const pushState = (typeof value === "string") ? true : value[1];
+
+    if (_value === "/" || _value === "." || _value.trim() === "") {
+      _value = router.dataset.default;
     }
 
-    if (this._url.pathname !== _value) {
+    if (pushState && this._url.pathname !== _value) {
       this._url.pathname = _value;
 
+      const displayPath = _value === router.dataset.default && typeof router.dataset.homeAsEmpty === "string"
+        ? _value = "/"
+        : _value;
+
       if (window.history && window.history.pushState) {
-        window.history.pushState(
-          { path: _value },
-          _value,
-          this.hash !== "#"
-            ? _value + this._url.search + this._url.search + this.hash
-            : _value
-        );
+        if (this.firstNavigation) {
+          window.history.replaceState(
+            { path: _value },
+            _value,
+            this.hash !== "#"
+              ? displayPath + this._url.search + this._url.search + this.hash
+              : displayPath
+          )
+        } else {
+          window.history.pushState(
+            { path: _value },
+            _value,
+            this.hash !== "#"
+              ? displayPath + this._url.search + this._url.search + this.hash
+              : displayPath
+          )
+        }
+
+        this.firstNavigation = false;
       } else {
         window.location.pathname = _value;
       }
+    } else {
+      this._url.pathname = _value;
     }
   }
 
@@ -103,4 +123,4 @@ class MyUrl implements URL {
 }
 
 /** @internal */
-export const url: URL = new MyUrl(document.location.href);
+export const url = new MyUrl(document.location.href);

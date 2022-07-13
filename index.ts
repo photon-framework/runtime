@@ -11,3 +11,4 @@ if (
 
 export * from "./src/page";
 export * from "./src/dotenv";
+export * from "./src/logger";

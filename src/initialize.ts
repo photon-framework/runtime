@@ -19,7 +19,7 @@ export const initialize = async() => {
   window.addEventListener(
     "popstate",
     async(ev) => {
-      if (ev.state) {
+      if (ev.state && ev.state.path) {
         await controller.navigateTo(ev.state.path, undefined, true);
       }
     },

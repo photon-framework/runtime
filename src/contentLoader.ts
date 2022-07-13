@@ -1,4 +1,4 @@
-import { disposeNode, join } from "@frank-mayer/magic";
+import { client, disposeNode, join } from "@frank-mayer/magic";
 import { AsyncFunction } from "./AsyncFunction";
 import { emptyStringHash, hashToString } from "./hash";
 import { logger } from "./logger";
@@ -24,6 +24,28 @@ type ContentLoaderValue = {
 class ContentLoader {
   private readonly cache = new Map<string, ContentLoaderEntry>();
   private readonly openRequests = new Map<string, Promise<Resp>>();
+
+  constructor() {
+    try {
+      if (router.dataset.preload && !client.saveData) {
+        const preload = JSON.parse(router.dataset.preload);
+        if (Array.isArray(preload)) {
+          setTimeout(async() => {
+            try {
+              for await (const path of preload) {
+                logger.debug(`Preloading "${path}"`);
+                void this.load(path);
+              }
+            } catch (e) {
+              logger.error(e);
+            }
+          }, 750);
+        }
+      }
+    } catch (e) {
+      logger.error("Error during preload", e);
+    }
+  }
 
   private async loadRef(el: HTMLElement): Promise<void> {
     const src = el.getAttribute("src")!;

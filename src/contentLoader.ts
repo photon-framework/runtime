@@ -67,10 +67,22 @@ class ContentLoader {
   }
 
   public async load(path: string): Promise<ContentLoaderValue> {
-    if (this.cache.has(path)) {
-      const cacheEntry = this.cache.get(path)!;
+    let _path = path;
+
+    while (_path.length > 1 && _path.endsWith("/")) {
+      _path = _path.substring(0, _path.length - 1);
+    }
+    if (_path === "/") {
+      _path = router.dataset.default;
+      while (_path.length > 1 && _path.endsWith("/")) {
+        _path = _path.substring(0, _path.length - 1);
+      }
+    }
+
+    if (this.cache.has(_path)) {
+      const cacheEntry = this.cache.get(_path)!;
       if (cacheEntry.ok) {
-        logger.debug(`Cache hit for "${path}"`);
+        logger.debug(`Cache hit for "${_path}"`);
         return cacheEntry;
       } else {
         return this.error();
@@ -79,7 +91,7 @@ class ContentLoader {
 
     try {
       const response = await this.fetch(
-        join(router.dataset.content, path + ".html")
+        join(router.dataset.content, _path + ".html")
       );
 
       if (response.status < 400) {
@@ -104,12 +116,12 @@ class ContentLoader {
           hash,
           scripts,
         };
-        logger.debug(`Storing "${path}" in cache`);
-        this.cache.set(path, entry);
+        logger.debug(`Storing "${_path}" in cache`);
+        this.cache.set(_path, entry);
         return entry;
       } else {
-        logger.debug(`Storing error for "${path}" in cache`);
-        this.cache.set(path, {
+        logger.debug(`Storing error for "${_path}" in cache`);
+        this.cache.set(_path, {
           ok: false,
           content: "",
           hash: await emptyStringHash,

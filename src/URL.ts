@@ -40,7 +40,17 @@ class MyUrl implements URL {
   private firstNavigation = true;
 
   get pathname(): string {
-    return normalize(this._url.pathname);
+    let _path = normalize(this._url.pathname);
+
+    while (_path.length > 1 && _path.endsWith("/")) {
+      _path = _path.substring(0, _path.length - 1);
+    }
+
+    if (_path === "/") {
+      _path = router.dataset.default;
+    }
+
+    return _path;
   }
   set pathname(value: string|[string, boolean]) {
     let _value = normalize((

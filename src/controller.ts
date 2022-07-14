@@ -5,7 +5,7 @@ import { contentLoader } from "./contentLoader";
 import { hashToString } from "./hash";
 import { logger } from "./logger";
 import { triggerPage } from "./page";
-import { router } from "./router";
+import { getLanguages, router } from "./router";
 import { url } from "./URL";
 import { UUID } from "./UUID";
 import { view } from "./view";
@@ -33,18 +33,24 @@ class Controller {
 
     logger.debug(`navigating to "${_path}"`);
 
+    const languages = getLanguages()
+
     // change language
     if (a && a.hreflang) {
-      logger.debug(`setting language to "${a.hreflang}"`);
-      document.documentElement.setAttribute("lang", a.hreflang);
+      if (!languages || languages.has(a.hreflang)) {
+        logger.debug(`setting language to "${a.hreflang}"`);
+        document.documentElement.setAttribute("lang", a.hreflang);
+      }
     } else if (a && a.lang) {
-      logger.debug(`setting language to "${a.lang}"`);
-      document.documentElement.setAttribute("lang", a.lang);
+      if (!languages || languages.has(a.lang)) {
+        logger.debug(`setting language to "${a.lang}"`);
+        document.documentElement.setAttribute("lang", a.lang);
+      }
     } else if (router.dataset.langSegment) {
       const langSegment = Number.parseInt(router.dataset.langSegment, 10);
       if (!isNaN(langSegment) && langSegment > -1) {
         const lang = _path.split("/").filter(Boolean)[langSegment];
-        if (lang) {
+        if (lang && (!languages || languages.has(lang))) {
           logger.debug(`setting language to "${lang}"`);
           document.documentElement.setAttribute("lang", lang);
         }

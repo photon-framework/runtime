@@ -1,5 +1,5 @@
 import { searchParams } from "./query";
-import { router } from "./router";
+import { getLanguages, router } from "./router";
 import { url } from "./URL";
 
 class View {
@@ -10,8 +10,9 @@ class View {
 
     const langSegment = Number(router.dataset.langSegment);
     if (!Number.isNaN(langSegment) && langSegment > -1) {
-      if (router.dataset.languages) {
-        for (const lang of JSON.parse(router.dataset.languages)) {
+      const languages = getLanguages();
+      if (languages) {
+        for (const lang of languages) {
           this[`changeLang_${lang}`] = () => {
             const path = url.pathname
               .split("/")
@@ -30,13 +31,14 @@ class View {
     const langSegment = Number(router.dataset.langSegment);
     if (!Number.isNaN(langSegment)) {
       const lang = url.pathname.split("/").filter(Boolean)[langSegment];
+      const languages = getLanguages();
 
-      if (lang) {
+      if (lang && (!languages || languages.has(lang))) {
         return lang;
       }
     }
 
-    return document.documentElement.lang ?? "en";
+    return document.documentElement.lang || "en";
   }
 
   public readonly title: string = document.title;
@@ -49,3 +51,6 @@ class View {
 
 /** @internal */
 export const view = new View();
+
+// eslint-disable-next-line no-undef
+(globalThis as any).view = view;

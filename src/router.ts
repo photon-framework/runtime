@@ -20,4 +20,9 @@ if (!router) {
   throw new Error("No router found");
 }
 
+export const getLanguages = (): ReadonlySet<string> | undefined =>
+  router.dataset.languages
+    ? new Set(JSON.parse(router.dataset.languages) as Array<string>)
+    : undefined
+
 export { router };

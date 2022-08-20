@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="./DocumentTransition.d.ts" />
+
 import { isAbsolute, join } from "@frank-mayer/magic/Path";
 import { nextEventLoop } from "@frank-mayer/magic/Timing";
 import { render } from "mustache";
@@ -67,7 +70,15 @@ class Controller {
     const newContent = await contentLoader.load(_path);
     if (oldHash !== newContent.hash) {
       logger.debug("Content changed, rendering page");
-      router.innerHTML = newContent.content;
+      if (document.createDocumentTransition) {
+        logger.debug("Document Transition supported, starting");
+        const transition = document.createDocumentTransition();
+        transition.start(()=>{router.innerHTML = newContent.content});
+      }
+      else {
+        logger.debug("Document Transition not supported");
+        router.innerHTML = newContent.content
+      }
     } else {
       logger.debug("Content unchanged, skipping rendering");
     }

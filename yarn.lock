@@ -147,10 +147,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mustache@npm:^4.1.3":
-  version: 4.1.3
-  resolution: "@types/mustache@npm:4.1.3"
-  checksum: dd54ef4d26c3bb8389ed23590ec1cf23fcb51cf0d4d574dbabb294142c8d5bd3ce6d98ecc0fc9f91bcfd5e017b04e4aedac505989f51de22752caaffcc0ee352
+"@types/mustache@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "@types/mustache@npm:4.2.2"
+  checksum: 1fa67a519f4302c96615524be4c8248067da02ca047bae9d4c4bb79977135ac7c15dcc388e7c70b8a817b9497004d5ca5c77a155dcb096bea16d53d4cdbe75d2
   languageName: node
   linkType: hard
 
@@ -1954,7 +1954,7 @@ __metadata:
   dependencies:
     "@frank-mayer/magic": ^4.0.0
     "@types/glob-to-regexp": ^0.4.1
-    "@types/mustache": ^4.1.3
+    "@types/mustache": ^4.2.2
     "@typescript-eslint/eslint-plugin": ^5.30.6
     "@typescript-eslint/parser": ^5.30.6
     eslint: ^8.19.0
@@ -2457,11 +2457,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
   version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=bda367"
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=a1c5e5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 96d3030cb01143570567cb4f3a616b10df65f658f0e74e853e77a089a6a954e35c800be7db8b9bfe9a1ae05d9c2897e281359f65e4caa1caf266368e1c4febd3
+  checksum: 9096d8f6c16cb80ef3bf96fcbbd055bf1c4a43bd14f3b7be45a9fbe7ada46ec977f604d5feed3263b4f2aa7d4c7477ce5f9cd87de0d6feedec69a983f3a4f93e
   languageName: node
   linkType: hard
 
